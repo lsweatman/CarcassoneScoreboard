@@ -8,22 +8,28 @@ const APP_DIR = path.resolve(__dirname, 'src');
 const CLIENT_DIR = path.resolve(__dirname, 'client/js');
 
 module.exports = {
-	entry: APP_DIR + '/app-client.js',
-	output: {
-		path: CLIENT_DIR,
-		filename: 'bundle.js'
-	},
-	module: {
-		loaders: [{
-			test: path.join(__dirname, 'src'),
-			loader: ['babel-loader'],
-			query: {
-				cacheDirectory: 'babel_cache',
-				presets: ['react', 'es2015']
-			}
-		}]
-	},
-	plugins: [
+	//return {
+		entry: {
+			js: './src/app-client.js',
+			vendor: ['react']
+		},
+		output: {
+			path: CLIENT_DIR,
+			filename: '[name].bundle.js'
+		},
+		module: {
+			rules: [{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: ['babel-loader'],
+				/*query: {
+					cacheDirectory: 'babel_cache',
+					presets: ['react', 'es2015']
+				}*/
+			}],
+		},
+	//},
+	/*plugins: [
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
 		}),
@@ -36,5 +42,5 @@ module.exports = {
 			beautify: false,
 			dead_code: true
 		})
-	]
+	]*/
 };
