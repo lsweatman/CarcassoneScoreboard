@@ -2,3 +2,4 @@ node_modules/
 .idea/
 babel_cache/
 client/js/
+npm-debug/
