@@ -1,0 +1,31 @@
+{
+  "name": "carcassonne-counter",
+  "version": "1.0.0",
+  "description": "Carcassonne Counter with expansions",
+  "main": "index.js",
+  "scripts": {
+    "build-dev": "webpack --devtool sourcemap",
+    "build-p": "SET NODE_ENV=production && webpack -p",
+    "start": "http-server client"
+  },
+  "keywords": [
+    "carcassone"
+  ],
+  "author": "Luke Sweatman",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "jquery": "^3.1.1",
+    "react": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
+    "react-dom": "^15.4.2",
+    "webpack": "^1.14.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^6.2.10",
+    "http-server": "^0.9.0"
+  }
+}
