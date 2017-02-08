@@ -64,7 +64,7 @@ export default class ScoreButtons extends React.Component {
 				<Button className="btn btn-primary standardButton"
 						onClick={this.handleScoreChange.bind(this, 10)}>+10</Button>
 
-				<Button onClick={this.remove}
+				<Button onClick={this.remove.bind(this)}
 						className="btn btn-danger standardButton">
 					<Glyphicon glyph="glyphicon glyphicon-trash"/>
 				</Button>

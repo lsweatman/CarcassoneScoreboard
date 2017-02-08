@@ -12,7 +12,8 @@ export default class IndexPage extends React.Component {
 		this.scores = [0,0,0];
 		this.names = ["test","test2","test3"];
 		this.state = {
-			sheepEnabled: false
+			sheepEnabled: false,
+			numOfPeople: this.scores.length
 		}
 	}
 
@@ -36,6 +37,11 @@ export default class IndexPage extends React.Component {
 		var scoresArr = this.scores;
 		scoresArr.push(0);
 		this.scores = scoresArr;
+
+		var currentNum = this.state.numOfPeople;
+		this.setState({
+			numOfPeople: currentNum+1
+		});
 	}
 
 	removePerson(i) {
@@ -46,6 +52,11 @@ export default class IndexPage extends React.Component {
 		var scoresArr = this.scores;
 		scoresArr.splice(i, 1);
 		this.scores = scoresArr;
+
+		var currentNum = this.state.numOfPeople;
+		this.setState({
+			numOfPeople: currentNum-1
+		});
 	}
 
 	eachPerson(score, i) {
@@ -69,7 +80,7 @@ export default class IndexPage extends React.Component {
 			<div className="board">
 				{this.names.map(this.eachPerson, this)}
 				<Button className="btn btn-sm btn-success"
-						onClick={this.addPerson.bind(null)}>
+						onClick={this.addPerson.bind(this)}>
 					<Glyphicon glyph="glyphicon glyphicon-plus"/>
 				</Button>
 				<Button className="btn btn-sm btn-info">
