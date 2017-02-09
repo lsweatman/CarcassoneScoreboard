@@ -60,8 +60,6 @@ export default class IndexPage extends React.Component {
 	}
 
 	eachPerson(score, i) {
-		console.log(this.scores[i]);
-		console.log(this.names[i]);
 		var personName = this.names[i];
 		var personScore = this.scores[i];
 		return (
@@ -89,10 +87,9 @@ export default class IndexPage extends React.Component {
 			</div>
 		)
 	}
-
+	
 	render() {
 		if(this.state.sheepEnabled){
-			console.log("sheep hit");
 			//TODO
 		}
 		else {
