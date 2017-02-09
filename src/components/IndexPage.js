@@ -5,6 +5,7 @@ import React from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ScoreButtons from './ScoreButtons';
+import Sheep from './Sheep';
 
 export default class IndexPage extends React.Component {
 	constructor(props) {
@@ -44,6 +45,13 @@ export default class IndexPage extends React.Component {
 		});
 	}
 
+	toggleSheep() {
+		var currentSheepState = this.state.sheepEnabled;
+		this.setState({
+			sheepEnabled: !currentSheepState
+		});
+	}
+	
 	removePerson(i) {
 		var namesArr = this.names;
 		namesArr.splice(i, 1);
@@ -72,6 +80,7 @@ export default class IndexPage extends React.Component {
 						  indivScore={personScore}/>
 		)
 	}
+	
 
 	renderNoSheep() {
 		return (
@@ -84,6 +93,36 @@ export default class IndexPage extends React.Component {
 				<Button className="btn btn-sm btn-info">
 					<Glyphicon glyph="glyphicon glyphicon-piggy-bank"/>
 				</Button>
+			</div>
+		)
+	}
+	
+	eachSheepPerson(score, i) {
+		var personName = this.names[i];
+		return (
+			<Sheep personName={this.names[i]}/>
+		)
+	}
+	
+	renderWithSheep() {
+		return (
+			<div className="board">
+				{this.names.map(this.eachPerson, this)}
+				
+				<div className="sheep-div">
+					{this.names.map(this.eachSheepPerson, this)}
+				</div
+				
+				<Button className="btn btn-sm btn-success"
+						onClick={this.addPerson.bind(this)}>
+					<Glyphicon glyph="glyphicon glyphicon-plus"/>
+				</Button>
+				
+				<Button className="btn btn-sm btn-info" 
+						onClick={this.toggleSheep.bind(this)>
+					<Glyphicon glyph="glyphicon glyphicon-piggy-bank"/>
+				</Button>
+				
 			</div>
 		)
 	}
