@@ -33,6 +33,11 @@ div.board {
 
 }
 
+div.sheep {
+	height: 75px;
+	width: 500px;
+}
+
 /*input[type=button] {
     vertical-align: middle;
     display: block;
