@@ -11,7 +11,7 @@ export default class IndexPage extends React.Component {
 	constructor(props) {
 		super();
 		this.scores = [0,0,0];
-		this.names = ["test","test2","test3"];
+		this.names = ["","",""];
 		this.state = {
 			sheepEnabled: false,
 			numOfPeople: this.scores.length
@@ -90,7 +90,8 @@ export default class IndexPage extends React.Component {
 						onClick={this.addPerson.bind(this)}>
 					<Glyphicon glyph="glyphicon glyphicon-plus"/>
 				</Button>
-				<Button className="btn btn-sm btn-info">
+				<Button className="btn btn-sm btn-info"
+						onClick={this.toggleSheep.bind(this)}>
 					<Glyphicon glyph="glyphicon glyphicon-piggy-bank"/>
 				</Button>
 			</div>
@@ -108,20 +109,21 @@ export default class IndexPage extends React.Component {
 		return (
 			<div className="board">
 				{this.names.map(this.eachPerson, this)}
-				
 				<div className="sheep-div">
 					{this.names.map(this.eachSheepPerson, this)}
-				</div
-				
-				<Button className="btn btn-sm btn-success"
-						onClick={this.addPerson.bind(this)}>
-					<Glyphicon glyph="glyphicon glyphicon-plus"/>
-				</Button>
-				
-				<Button className="btn btn-sm btn-info" 
-						onClick={this.toggleSheep.bind(this)>
-					<Glyphicon glyph="glyphicon glyphicon-piggy-bank"/>
-				</Button>
+				</div>
+
+				<div className="misc-div">
+					<Button className="btn btn-sm btn-success"
+							onClick={this.addPerson.bind(this)}>
+						<Glyphicon glyph="glyphicon glyphicon-plus"/>
+					</Button>
+
+					<Button className="btn btn-sm btn-info"
+							onClick={this.toggleSheep.bind(this)}>
+						<Glyphicon glyph="glyphicon glyphicon-piggy-bank"/>
+					</Button>
+				</div>
 				
 			</div>
 		)
@@ -129,10 +131,9 @@ export default class IndexPage extends React.Component {
 	
 	render() {
 		if(this.state.sheepEnabled){
-			//TODO
+			return(this.renderWithSheep())
 		}
 		else {
-			console.log("no sheep hit");
 			return(this.renderNoSheep())
 		}
 	}
