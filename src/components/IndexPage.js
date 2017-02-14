@@ -16,7 +16,9 @@ export default class IndexPage extends React.Component {
 			names: ["","",""],
 			sheepEnabled: false,
 			numOfPeople: 3,
-			remainingSheep: [0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4]
+			remainingSheep: [0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4],
+			subSheepArray: [[],[],[]],
+			sheepScores: [0,0,0]
 		}
 	}
 
@@ -38,18 +40,27 @@ export default class IndexPage extends React.Component {
 	}
 
 	addPerson() {
+		//TODO: Remain stuff
 		var namesArr = this.state.names;
 		namesArr.push("");
 
 		var scoresArr = this.state.scores;
 		scoresArr.push(0);
 
+		var subSheepArr = this.state.subSheepArray;
+		subSheepArr.push([]);
+		
+		var sheepScoresArr = this.state.sheepScores;
+		sheepScoresArr.push(0);
+		
 		var currentNum = this.state.numOfPeople;
 
 		this.setState({
 			numOfPeople: currentNum+1,
 			names: namesArr,
-			scores: scoresArr
+			scores: scoresArr,
+			subSheepArray: subSheepArr,
+			sheepScores: sheepScoresArr
 		});
 	}
 
@@ -63,8 +74,49 @@ export default class IndexPage extends React.Component {
 	returnSheep(array) {
 		var currentSheep = this.state.remainingSheep;
 		array.map((index) => {
-			remainingSheep.push(array[i]);
+			this.state.remainingSheep.push(array[index]);
 		},this);
+	}
+	
+	handleSheepGenerate(i) {
+		if (this.state.remainingSheep.length == 0) {
+			window.alert("All sheep used. Gather only");
+		}
+		else {
+			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
+			//console.log(this.state.captiveSheep);
+			console.log(this.state.remainingSheep[randomVal]);
+			console.log(i);
+			
+			if (randomVal !== 0) {
+				console.log(i);
+				
+				console.log(this.state.remainingSheep[randomVal]);
+				
+				var subSheepUpdater = this.state.subSheepArray;
+				subSheepUpdater[i].push(this.state.remainingSheep[randomVal]);
+				//Bug here
+				console.log(this.state.subSheepUpdater);
+				
+				var updateRemaining = this.state.remainingSheep;
+				updateRemaining.pop([randomVal]);
+				
+				this.setState({
+					subSheepArray: subSheepUpdater,
+					remainingSheep: updateRemaining
+				});
+				//Change
+				//this.handleScoreChange(this.state.remainingSheep[randomVal]);
+			}
+			else {
+				window.alert("A wolf has eaten your flock!");
+				this.props.returnSheep(this.captiveSheep);
+				this.setState({
+					sheepScore: 0
+				});
+				this.state.subSheepArray[i] = [];
+			}
+		}
 	}
 	
 	removePerson(i) {
@@ -118,7 +170,9 @@ export default class IndexPage extends React.Component {
 				   nameChange={this.nameUpdate.bind(this)}
 				   scoreChange={this.scoreUpdate.bind(this)} 
 				   remainingSheep={this.state.remainingSheep} 
-				   returnSheep={this.returnSheep.bind(this)}/>
+				   returnSheep={this.returnSheep.bind(this)}
+				   handleGenerate={this.handleSheepGenerate.bind(this)}
+				   subSheepArray={this.state.subSheepArray[i]}/>
 		)
 	}
 	

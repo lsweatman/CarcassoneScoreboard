@@ -5,7 +5,7 @@ export default class Sheep extends React.Component {
 	constructor(props) {
 		super(props);
 		//var parentName = this.props.indivName;
-		this.captiveSheep = [];
+		this.captiveSheep = this.props.subSheepArray;
 		this.state = {
 			indivName: this.props.indivName,
 			remainingSheep: this.props.remainingSheep,
@@ -21,15 +21,23 @@ export default class Sheep extends React.Component {
 		});
 	}
 
+	handleGatherClick() {
+		this.props.scoreChange(this.state.sheepScore, this.props.index);
+		this.setState({
+			sheepScore: 0
+		});
+		this.props.returnSheep(this.captiveSheep);
+		this.captiveSheep = [];
+	}
+	
+	//TODO change this to be in willrecieve
 	handleScoreChange(changeFactor) {
 		this.setState({
 			sheepScore: this.state.sheepScore + changeFactor
-		}, () => {
-			this.props.scoreChange(this.state.sheepScore, this.props.index);
 		});
 	}
 
-	handleGenerateClick() {
+	/*handleGenerateClick() {
 		if (this.state.remainingSheep.length == 0) {
 			window.alert("All sheep used. Gather only");
 		}
@@ -42,15 +50,16 @@ export default class Sheep extends React.Component {
 				this.captiveSheep.push(this.state.remainingSheep[randomVal]);
 				this.handleScoreChange(this.state.remainingSheep[randomVal]);
 			}
-			else {
+			else {	
 				window.alert("A wolf has eaten your flock!");
+				this.props.returnSheep(this.captiveSheep);
 				this.setState({
 					sheepScore: 0
 				});
-				this.props.returnSheep(this.captiveSheep)
+				this.captiveSheep = [];
 			}
 		}
-	}
+	}*/
 	
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.indivName !== this.state.indivName) {
@@ -58,8 +67,18 @@ export default class Sheep extends React.Component {
 				indivName: nextProps.indivName
 			});
 		}
+		/*if (nextProps.subSheepArray !== this.props.subSheepArray) {
+			var addSheep = this.state.sheepScore + this.props.subSheepArray[this.props.subSheepArray.length - 1];
+			this.setState({
+				sheepScore: addSheep
+			});
+		}*/
 	}
 
+	handleGenerate() {
+		this.props.handleGenerate(this.props.index);
+	}
+	
 	render() {
 		return (
 			<div className="sub-sheep">
@@ -85,7 +104,7 @@ export default class Sheep extends React.Component {
 						<tr>
 							<td className="tableAlign">
 								<Button className="btn btn-primary" 
-										onClick={this.handleGenerateClick.bind(this)}>
+										onClick={this.handleGenerate.bind(this)}>
 									Generate
 								</Button>
 							</td>
@@ -93,7 +112,8 @@ export default class Sheep extends React.Component {
 
 						<tr>
 							<td className="tableAlign">
-								<Button className="btn btn-primary">
+								<Button className="btn btn-primary" 
+										onClick={this.handleGatherClick.bind(this)}>
 									Gather
 								</Button>
 							</td>
