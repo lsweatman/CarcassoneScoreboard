@@ -5,8 +5,10 @@ export default class Sheep extends React.Component {
 	constructor(props) {
 		super(props);
 		//var parentName = this.props.indivName;
+		this.captiveSheep = [];
 		this.state = {
 			indivName: this.props.indivName,
+			remainingSheep: this.props.remainingSheep,
 			sheepScore: 0
 		};
 	}
@@ -27,6 +29,29 @@ export default class Sheep extends React.Component {
 		});
 	}
 
+	handleGenerateClick() {
+		if (this.state.remainingSheep.length == 0) {
+			window.alert("All sheep used. Gather only");
+		}
+		else {
+			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
+			console.log(this.captiveSheep);
+			console.log(this.state.remainingSheep[randomVal]);
+			
+			if (randomVal !== 0) {
+				this.captiveSheep.push(this.state.remainingSheep[randomVal]);
+				this.handleScoreChange(this.state.remainingSheep[randomVal]);
+			}
+			else {
+				window.alert("A wolf has eaten your flock!");
+				this.setState({
+					sheepScore: 0
+				});
+				this.props.returnSheep(this.captiveSheep)
+			}
+		}
+	}
+	
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.indivName !== this.state.indivName) {
 			this.setState({
@@ -59,14 +84,16 @@ export default class Sheep extends React.Component {
 
 						<tr>
 							<td className="tableAlign">
-								<Button className="btn btn-primary">Generate</Button>
+								<Button className="btn btn-primary" 
+										onClick={this.handleGenerateClick.bind(this)}>
+									Generate
+								</Button>
 							</td>
 						</tr>
 
 						<tr>
 							<td className="tableAlign">
-								<Button className="btn btn-primary"
-										onClick={this.handleScoreChange.bind(this, 5)}>
+								<Button className="btn btn-primary">
 									Gather
 								</Button>
 							</td>

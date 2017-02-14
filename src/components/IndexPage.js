@@ -60,6 +60,13 @@ export default class IndexPage extends React.Component {
 		});
 	}
 	
+	returnSheep(array) {
+		var currentSheep = this.state.remainingSheep;
+		array.map((index) => {
+			remainingSheep.push(array[i]);
+		},this);
+	}
+	
 	removePerson(i) {
 		var namesArr = this.state.names;
 		namesArr.splice(i, 1);
@@ -109,7 +116,9 @@ export default class IndexPage extends React.Component {
 				   index={i}
 				   indivName={this.state.names[i]}
 				   nameChange={this.nameUpdate.bind(this)}
-				   scoreChange={this.scoreUpdate.bind(this)}/>
+				   scoreChange={this.scoreUpdate.bind(this)} 
+				   remainingSheep={this.state.remainingSheep} 
+				   returnSheep={this.returnSheep.bind(this)}/>
 		)
 	}
 	
