@@ -10,38 +10,46 @@ import Sheep from './Sheep';
 export default class IndexPage extends React.Component {
 	constructor(props) {
 		super();
-		this.scores = [0,0,0];
-		this.names = ["","",""];
+
 		this.state = {
+			scores: [0,0,0],
+			names: ["","",""],
 			sheepEnabled: false,
-			numOfPeople: this.scores.length
+			numOfPeople: 3,
+			remainingSheep: [0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4]
 		}
 	}
 
 	nameUpdate(newName, i) {
-		var namesArr = this.names;
+		var namesArr = this.state.names;
 		namesArr[i] = newName;
-		this.names = namesArr;
+		this.setState({
+			names: namesArr
+		});
+		this.forceUpdate();
 	}
 
 	scoreUpdate(newScore, i) {
-		var scoresArr = this.scores;
+		var scoresArr = this.state.scores;
 		scoresArr[i] = newScore;
-		this.scores = scoresArr;
+		this.setState({
+			scores: scoresArr
+		})
 	}
 
 	addPerson() {
-		var namesArr = this.names;
+		var namesArr = this.state.names;
 		namesArr.push("");
-		this.names = namesArr;
 
-		var scoresArr = this.scores;
+		var scoresArr = this.state.scores;
 		scoresArr.push(0);
-		this.scores = scoresArr;
 
 		var currentNum = this.state.numOfPeople;
+
 		this.setState({
-			numOfPeople: currentNum+1
+			numOfPeople: currentNum+1,
+			names: namesArr,
+			scores: scoresArr
 		});
 	}
 
@@ -53,13 +61,13 @@ export default class IndexPage extends React.Component {
 	}
 	
 	removePerson(i) {
-		var namesArr = this.names;
+		var namesArr = this.state.names;
 		namesArr.splice(i, 1);
-		this.names = namesArr;
+		this.state.names = namesArr;
 
-		var scoresArr = this.scores;
+		var scoresArr = this.state.scores;
 		scoresArr.splice(i, 1);
-		this.scores = scoresArr;
+		this.state.scores = scoresArr;
 
 		var currentNum = this.state.numOfPeople;
 		this.setState({
@@ -68,24 +76,21 @@ export default class IndexPage extends React.Component {
 	}
 
 	eachPerson(score, i) {
-		var personName = this.names[i];
-		var personScore = this.scores[i];
 		return (
 			<ScoreButtons key={i}
 						  index={i}
 						  onRemove={this.removePerson.bind(this)}
 						  nameChange={this.nameUpdate.bind(this)}
 						  scoreChange={this.scoreUpdate.bind(this)}
-						  indivName={personName}
-						  indivScore={personScore}/>
+						  indivName={this.state.names[i]}
+						  indivScore={this.state.scores[i]}/>
 		)
 	}
-	
 
 	renderNoSheep() {
 		return (
 			<div className="board">
-				{this.names.map(this.eachPerson, this)}
+				{this.state.names.map(this.eachPerson, this)}
 				<Button className="btn btn-sm btn-success"
 						onClick={this.addPerson.bind(this)}>
 					<Glyphicon glyph="glyphicon glyphicon-plus"/>
@@ -99,18 +104,21 @@ export default class IndexPage extends React.Component {
 	}
 	
 	eachSheepPerson(score, i) {
-		var personName = this.names[i];
 		return (
-			<Sheep personName={this.names[i]}/>
+			<Sheep key={i}
+				   index={i}
+				   indivName={this.state.names[i]}
+				   nameChange={this.nameUpdate.bind(this)}
+				   scoreChange={this.scoreUpdate.bind(this)}/>
 		)
 	}
 	
 	renderWithSheep() {
 		return (
 			<div className="board">
-				{this.names.map(this.eachPerson, this)}
+				{this.state.names.map(this.eachPerson, this)}
 				<div className="sheep-div">
-					{this.names.map(this.eachSheepPerson, this)}
+					{this.state.names.map(this.eachSheepPerson, this)}
 				</div>
 
 				<div className="misc-div">

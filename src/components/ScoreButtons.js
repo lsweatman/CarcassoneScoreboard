@@ -8,12 +8,12 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 export default class ScoreButtons extends React.Component {
 	constructor(props) {
 		super(props);
-		var propName = this.props.indivName;
-		var propScore = this.props.indivScore;
+		/*var propName = this.props.indivName;
+		var propScore = this.props.indivScore;*/
 
 		this.state = {
-			name: propName,
-			score: propScore
+			name: this.props.indivName,
+			score: this.props.indivScore
 		};
 	}
 
@@ -26,17 +26,28 @@ export default class ScoreButtons extends React.Component {
 	}
 
 	handleTextBoxChange(evt) {
-		console.log(evt.target);
 		this.setState({
 			name: evt.target.value.substring(0,10)
 		}, () => {
 			this.props.nameChange(this.state.name, this.props.index);
 		});
-		this.props.nameChange(this.state.name, this.props.index);
 	}
 
 	remove() {
 		this.props.onRemove(this.props.index);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.indivName !== this.state.name) {
+			this.setState({
+				name: nextProps.indivName
+			});
+		}
+		if (nextProps.indivScore !== this.state.score) {
+			this.setState({
+				score: nextProps.indivScore
+			});
+		}
 	}
 
 	render() {
@@ -51,9 +62,10 @@ export default class ScoreButtons extends React.Component {
 				<Button className="btn btn-primary standardButton"
 						onClick={this.handleScoreChange.bind(this, -1)}>-1</Button>
 
-				<textarea className="standardButton"
-						  style={{"width":"45px","height":"27px"}}
-						  value={this.state.score}/>
+				<input type="text"
+					   className="standardButton"
+					   style={{"width":"45px","height":"27px"}}
+					   value={this.state.score}/>
 
 				<Button className="btn btn-primary standardButton"
 						onClick={this.handleScoreChange.bind(this, 1)}>+1</Button>
