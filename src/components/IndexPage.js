@@ -67,9 +67,13 @@ export default class IndexPage extends React.Component {
 	}
 	
 	returnSheep(array) {
+		console.log(array);
 		var currentSheep = this.state.remainingSheep;
 		array.map((index) => {
-			this.state.remainingSheep.push(array[index]);
+			/*console.log(index);
+			console.log(array[index]);*/
+			this.state.remainingSheep.push(index);
+			console.log(this.state.remainingSheep);
 		},this);
 	}
 	
@@ -82,16 +86,16 @@ export default class IndexPage extends React.Component {
 			//console.log(this.state.captiveSheep);
 			
 			if (this.state.remainingSheep[randomVal] !== 0) {
-				console.log(randomVal);
+				//console.log(randomVal);
 				
-				console.log(this.state.remainingSheep[randomVal]);
+				//console.log(this.state.remainingSheep[randomVal]);
 				
 				var subSheepUpdater = this.state.subSheepArray;
 
 				subSheepUpdater[i].push(this.state.remainingSheep[randomVal]);
 
-				console.log(this.state.subSheepArray[i]);
-				console.log(subSheepUpdater[i]);
+				//console.log(this.state.subSheepArray[i]);
+				//console.log(subSheepUpdater[i]);
 				
 				var updateRemaining = this.state.remainingSheep;
 				updateRemaining.splice(randomVal, 1);
