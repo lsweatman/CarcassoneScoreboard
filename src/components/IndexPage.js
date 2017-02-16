@@ -17,8 +17,7 @@ export default class IndexPage extends React.Component {
 			sheepEnabled: false,
 			numOfPeople: 3,
 			remainingSheep: [0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4],
-			subSheepArray: [[],[],[]],
-			sheepScores: [0,0,0]
+			subSheepArray: [[],[],[]]
 		}
 	}
 
@@ -40,7 +39,7 @@ export default class IndexPage extends React.Component {
 	}
 
 	addPerson() {
-		//TODO: Remain stuff
+		//TODO: Rename stuff
 		var namesArr = this.state.names;
 		namesArr.push("");
 
@@ -50,17 +49,13 @@ export default class IndexPage extends React.Component {
 		var subSheepArr = this.state.subSheepArray;
 		subSheepArr.push([]);
 		
-		var sheepScoresArr = this.state.sheepScores;
-		sheepScoresArr.push(0);
-		
 		var currentNum = this.state.numOfPeople;
 
 		this.setState({
 			numOfPeople: currentNum+1,
 			names: namesArr,
 			scores: scoresArr,
-			subSheepArray: subSheepArr,
-			sheepScores: sheepScoresArr
+			subSheepArray: subSheepArr
 		});
 	}
 
@@ -85,21 +80,21 @@ export default class IndexPage extends React.Component {
 		else {
 			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
 			//console.log(this.state.captiveSheep);
-			console.log(this.state.remainingSheep[randomVal]);
-			console.log(i);
 			
-			if (randomVal !== 0) {
-				console.log(i);
+			if (this.state.remainingSheep[randomVal] !== 0) {
+				console.log(randomVal);
 				
 				console.log(this.state.remainingSheep[randomVal]);
 				
 				var subSheepUpdater = this.state.subSheepArray;
+
 				subSheepUpdater[i].push(this.state.remainingSheep[randomVal]);
-				//Bug here
-				console.log(this.state.subSheepUpdater);
+
+				console.log(this.state.subSheepArray[i]);
+				console.log(subSheepUpdater[i]);
 				
 				var updateRemaining = this.state.remainingSheep;
-				updateRemaining.pop([randomVal]);
+				updateRemaining.splice(randomVal, 1);
 				
 				this.setState({
 					subSheepArray: subSheepUpdater,
@@ -110,27 +105,44 @@ export default class IndexPage extends React.Component {
 			}
 			else {
 				window.alert("A wolf has eaten your flock!");
-				this.props.returnSheep(this.captiveSheep);
+				this.returnSheep(this.state.subSheepArray[i]);
+
+                var subSheepWiper = this.state.subSheepArray;
+                subSheepWiper[i] = [];
+
 				this.setState({
-					sheepScore: 0
+					subSheepArray: subSheepWiper
 				});
-				this.state.subSheepArray[i] = [];
 			}
 		}
 	}
-	
+
+	handleSheepGather(i) {
+        this.returnSheep(this.state.subSheepArray[i]);
+        var subSheepWiper = this.state.subSheepArray;
+        subSheepWiper[i] = [];
+
+        this.setState({
+            subSheepArray: subSheepWiper
+        });
+	}
+
 	removePerson(i) {
 		var namesArr = this.state.names;
 		namesArr.splice(i, 1);
-		this.state.names = namesArr;
 
 		var scoresArr = this.state.scores;
 		scoresArr.splice(i, 1);
-		this.state.scores = scoresArr;
+
+		var subSheepArr = this.state.subSheepArray;
+		subSheepArr.splice(i, 1);
 
 		var currentNum = this.state.numOfPeople;
 		this.setState({
-			numOfPeople: currentNum-1
+			numOfPeople: currentNum-1,
+			names: namesArr,
+			scores: scoresArr,
+            subSheepArray: subSheepArr
 		});
 	}
 
@@ -172,6 +184,7 @@ export default class IndexPage extends React.Component {
 				   remainingSheep={this.state.remainingSheep} 
 				   returnSheep={this.returnSheep.bind(this)}
 				   handleGenerate={this.handleSheepGenerate.bind(this)}
+				   handleGather={this.handleSheepGather.bind(this)}
 				   subSheepArray={this.state.subSheepArray[i]}/>
 		)
 	}

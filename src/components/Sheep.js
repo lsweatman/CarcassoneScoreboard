@@ -8,7 +8,6 @@ export default class Sheep extends React.Component {
 		this.captiveSheep = this.props.subSheepArray;
 		this.state = {
 			indivName: this.props.indivName,
-			remainingSheep: this.props.remainingSheep,
 			sheepScore: 0
 		};
 	}
@@ -23,11 +22,7 @@ export default class Sheep extends React.Component {
 
 	handleGatherClick() {
 		this.props.scoreChange(this.state.sheepScore, this.props.index);
-		this.setState({
-			sheepScore: 0
-		});
-		this.props.returnSheep(this.captiveSheep);
-		this.captiveSheep = [];
+		this.props.handleGather(this.props.index);
 	}
 	
 	//TODO change this to be in willrecieve
@@ -36,30 +31,6 @@ export default class Sheep extends React.Component {
 			sheepScore: this.state.sheepScore + changeFactor
 		});
 	}
-
-	/*handleGenerateClick() {
-		if (this.state.remainingSheep.length == 0) {
-			window.alert("All sheep used. Gather only");
-		}
-		else {
-			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
-			console.log(this.captiveSheep);
-			console.log(this.state.remainingSheep[randomVal]);
-			
-			if (randomVal !== 0) {
-				this.captiveSheep.push(this.state.remainingSheep[randomVal]);
-				this.handleScoreChange(this.state.remainingSheep[randomVal]);
-			}
-			else {	
-				window.alert("A wolf has eaten your flock!");
-				this.props.returnSheep(this.captiveSheep);
-				this.setState({
-					sheepScore: 0
-				});
-				this.captiveSheep = [];
-			}
-		}
-	}*/
 	
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.indivName !== this.state.indivName) {
@@ -67,12 +38,11 @@ export default class Sheep extends React.Component {
 				indivName: nextProps.indivName
 			});
 		}
-		/*if (nextProps.subSheepArray !== this.props.subSheepArray) {
-			var addSheep = this.state.sheepScore + this.props.subSheepArray[this.props.subSheepArray.length - 1];
-			this.setState({
-				sheepScore: addSheep
-			});
-		}*/
+
+        var totalSheep = nextProps.subSheepArray.reduce((a, b) => a + b, 0);
+		this.setState({
+			sheepScore: totalSheep
+		});
 	}
 
 	handleGenerate() {
