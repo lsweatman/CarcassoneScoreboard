@@ -21,11 +21,9 @@ export default class Sheep extends React.Component {
 	}
 
 	handleGatherClick() {
-		this.props.scoreChange(this.state.sheepScore, this.props.index);
 		this.props.handleGather(this.props.index);
 	}
 	
-	//TODO change this to be in willrecieve
 	handleScoreChange(changeFactor) {
 		this.setState({
 			sheepScore: this.state.sheepScore + changeFactor

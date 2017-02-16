@@ -67,13 +67,9 @@ export default class IndexPage extends React.Component {
 	}
 	
 	returnSheep(array) {
-		console.log(array);
 		var currentSheep = this.state.remainingSheep;
 		array.map((index) => {
-			/*console.log(index);
-			console.log(array[index]);*/
 			this.state.remainingSheep.push(index);
-			console.log(this.state.remainingSheep);
 		},this);
 	}
 	
@@ -122,12 +118,19 @@ export default class IndexPage extends React.Component {
 	}
 
 	handleSheepGather(i) {
+		var totalSheep = this.state.subSheepArray[i].reduce((a, b) => a + b, 0);
+		console.log(totalSheep);
+		var updateScoreArr = this.state.scores;
+		updateScoreArr[i] = totalSheep + updateScoreArr[i];
+		console.log(updateScoreArr);
+		
         this.returnSheep(this.state.subSheepArray[i]);
         var subSheepWiper = this.state.subSheepArray;
         subSheepWiper[i] = [];
 
         this.setState({
-            subSheepArray: subSheepWiper
+            subSheepArray: subSheepWiper,
+			scores: updateScoreArr
         });
 	}
 
