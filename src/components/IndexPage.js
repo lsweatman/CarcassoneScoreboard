@@ -79,20 +79,12 @@ export default class IndexPage extends React.Component {
 		}
 		else {
 			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
-			//console.log(this.state.captiveSheep);
 			
 			if (this.state.remainingSheep[randomVal] !== 0) {
-				//console.log(randomVal);
-				
-				//console.log(this.state.remainingSheep[randomVal]);
-				
 				var subSheepUpdater = this.state.subSheepArray;
 
 				subSheepUpdater[i].push(this.state.remainingSheep[randomVal]);
 
-				//console.log(this.state.subSheepArray[i]);
-				//console.log(subSheepUpdater[i]);
-				
 				var updateRemaining = this.state.remainingSheep;
 				updateRemaining.splice(randomVal, 1);
 				
@@ -100,8 +92,6 @@ export default class IndexPage extends React.Component {
 					subSheepArray: subSheepUpdater,
 					remainingSheep: updateRemaining
 				});
-				//Change
-				//this.handleScoreChange(this.state.remainingSheep[randomVal]);
 			}
 			else {
 				window.alert("A wolf has eaten your flock!");
@@ -119,10 +109,8 @@ export default class IndexPage extends React.Component {
 
 	handleSheepGather(i) {
 		var totalSheep = this.state.subSheepArray[i].reduce((a, b) => a + b, 0);
-		console.log(totalSheep);
 		var updateScoreArr = this.state.scores;
 		updateScoreArr[i] = totalSheep + updateScoreArr[i];
-		console.log(updateScoreArr);
 		
         this.returnSheep(this.state.subSheepArray[i]);
         var subSheepWiper = this.state.subSheepArray;
