@@ -2,3 +2,5 @@ node_modules/
 .idea/
 babel_cache/
 npm-debug.log
+client/js/*.map
+client/js/vendor.*
