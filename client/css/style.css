@@ -12,8 +12,8 @@ body {
 }
 
 div.board {
-    display: flex;
-    flex-direction: column;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
     width: 100%;
     background: #eab92d;
     background: radial-gradient(ellipse at center, #eab92d 57%, #c79810 99%);
@@ -24,8 +24,8 @@ div.board {
 /***************
 ScoreButtons*/
 .person {
-    display: flex;
-    flex-direction: row;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
     align-items: center;
     /*font-size: 1.5em;*/
     height: 100px;
@@ -48,13 +48,13 @@ ScoreButtons*/
 End ScoreButtons*/
 
 .sheep-div {
-    display: flex;
+    display: -webkit-flex;
     flex-direction: row;
 }
 
 .sub-sheep {
-    display: flex;
-    flex-direction: column;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
     background-color: #848484;
     overflow: hidden;
     height: 235px;
@@ -79,8 +79,8 @@ End ScoreButtons*/
     margin: 0 auto;
 }*/
 div.misc-div {
-    display: flex;
-    flex-direction: row;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
 }
 
 .standardTextBox {
