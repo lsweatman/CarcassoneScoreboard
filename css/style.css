@@ -18,7 +18,7 @@ div#main {
 
 div.person {
     height: 45px;
-    width: 600px;
+    width: 500px;
     background-color: #848484;
     position: relative;
     -webkit-box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, .2);
