@@ -53,36 +53,36 @@ export default class ScoreButtons extends React.Component {
 	render() {
 		return (
 			<div className="person">
-				<Button className="btn btn-primary standardButton"
+				<Button className="btn btn-primary score-buttons"
 						onClick={this.handleScoreChange.bind(this, -10)}>-10</Button>
 
-				<Button className="btn btn-primary standardButton"
+				<Button className="btn btn-primary score-buttons"
 						onClick={this.handleScoreChange.bind(this, -4)}>-4</Button>
 
-				<Button className="btn btn-primary standardButton"
+				<Button className="btn btn-primary score-buttons"
 						onClick={this.handleScoreChange.bind(this, -1)}>-1</Button>
 
 				<input type="text"
-					   className="standardButton"
-					   style={{"width":"45px","height":"27px"}}
+					   className="score-buttons"
+					   style={{"width":"90px"}}
 					   value={this.state.score}/>
 
-				<Button className="btn btn-primary standardButton"
+				<Button className="btn btn-primary score-buttons"
 						onClick={this.handleScoreChange.bind(this, 1)}>+1</Button>
 
-				<Button className="btn btn-primary standardButton"
+				<Button className="btn btn-primary score-buttons"
 						onClick={this.handleScoreChange.bind(this, 4)}>+4</Button>
 
-				<Button className="btn btn-primary standardButton"
+				<Button className="btn btn-primary score-buttons"
 						onClick={this.handleScoreChange.bind(this, 10)}>+10</Button>
 
 				<Button onClick={this.remove.bind(this)}
-						className="btn btn-danger standardButton">
+						className="btn btn-danger score-buttons">
 					<Glyphicon glyph="glyphicon glyphicon-trash"/>
 				</Button>
 
 				<input type="text"
-					   className="standardTextBox"
+					   className="standardTextBox score-buttons"
 					   value={this.state.name}
 					   onChange={this.handleTextBoxChange.bind(this)}/>
 			</div>

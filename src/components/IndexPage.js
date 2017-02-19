@@ -153,22 +153,6 @@ export default class IndexPage extends React.Component {
 		)
 	}
 
-	renderNoSheep() {
-		return (
-			<div className="board">
-				{this.state.names.map(this.eachPerson, this)}
-				<Button className="btn btn-sm btn-success"
-						onClick={this.addPerson.bind(this)}>
-					<Glyphicon glyph="glyphicon glyphicon-plus"/>
-				</Button>
-				<Button className="btn btn-sm btn-info"
-						onClick={this.toggleSheep.bind(this)}>
-					<Glyphicon glyph="glyphicon glyphicon-piggy-bank"/>
-				</Button>
-			</div>
-		)
-	}
-	
 	eachSheepPerson(score, i) {
 		return (
 			<Sheep key={i}
@@ -186,34 +170,54 @@ export default class IndexPage extends React.Component {
 	
 	renderWithSheep() {
 		return (
-			<div className="board">
+			<div className="subboard">
 				{this.state.names.map(this.eachPerson, this)}
 				<div className="sheep-div">
 					{this.state.names.map(this.eachSheepPerson, this)}
 				</div>
-
-				<div className="misc-div">
-					<Button className="btn btn-sm btn-success"
-							onClick={this.addPerson.bind(this)}>
-						<Glyphicon glyph="glyphicon glyphicon-plus"/>
-					</Button>
-
-					<Button className="btn btn-sm btn-info"
-							onClick={this.toggleSheep.bind(this)}>
-						<Glyphicon glyph="glyphicon glyphicon-piggy-bank"/>
-					</Button>
-				</div>
-				
 			</div>
 		)
 	}
 	
 	render() {
 		if(this.state.sheepEnabled){
-			return(this.renderWithSheep())
+			return(
+				<div className="board">
+
+					{this.renderWithSheep()}
+
+					<div className="misc-div">
+						<Button className="btn btn-sm btn-success misc-buttons"
+								onClick={this.addPerson.bind(this)}>
+							<Glyphicon glyph="glyphicon glyphicon-plus"/>
+						</Button>
+
+						<Button className="btn btn-sm btn-info misc-buttons sheep-icon"
+								onClick={this.toggleSheep.bind(this)}>
+						</Button>
+					</div>
+
+				</div>
+			)
 		}
 		else {
-			return(this.renderNoSheep())
+			return (
+				<div className="board">
+					{this.state.names.map(this.eachPerson, this)}
+
+					<div className="misc-div">
+						<Button className="btn btn-sm btn-success misc-buttons"
+								onClick={this.addPerson.bind(this)}>
+							<Glyphicon glyph="glyphicon glyphicon-plus"/>
+						</Button>
+
+						<Button className="btn btn-sm btn-info misc-buttons sheep-icon"
+								onClick={this.toggleSheep.bind(this)}>
+						</Button>
+					</div>
+
+				</div>
+			)
 		}
 	}
 }

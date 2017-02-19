@@ -50,44 +50,24 @@ export default class Sheep extends React.Component {
 	render() {
 		return (
 			<div className="sub-sheep">
-				<table style={{"width":"100px","height":"150px"}}>
-					<tbody>
-						<tr>
-							<td className="tableAlign">
-								<input type="text"
-									   value={this.state.indivName}
-									   style={{"width":"75px","height":"27px"}}
-									   onChange={this.handleNameChange.bind(this)}/>
-							</td>
-						</tr>
+				<input type="text"
+					   value={this.state.indivName}
+					   onChange={this.handleNameChange.bind(this)}
+					   className="sheep-element"/>
 
-						<tr>
-							<td className="tableAlign">
-								<input type="text"
-									   value={this.state.sheepScore}
-									   style={{"width":"45px","height":"27px"}}/>
-							</td>
-						</tr>
+				<input type="text"
+					   value={this.state.sheepScore}
+					   className="sheep-element"/>
 
-						<tr>
-							<td className="tableAlign">
-								<Button className="btn btn-primary" 
-										onClick={this.handleGenerate.bind(this)}>
-									Generate
-								</Button>
-							</td>
-						</tr>
+				<Button className="btn btn-primary sheep-element"
+						onClick={this.handleGenerate.bind(this)}>
+					Generate
+				</Button>
 
-						<tr>
-							<td className="tableAlign">
-								<Button className="btn btn-primary" 
-										onClick={this.handleGatherClick.bind(this)}>
-									Gather
-								</Button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<Button className="btn btn-primary sheep-element"
+								onClick={this.handleGatherClick.bind(this)}>
+							Gather
+				</Button>
 			</div>
 		)
 	}
