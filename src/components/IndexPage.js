@@ -59,6 +59,11 @@ export default class IndexPage extends React.Component {
 		});
 	}
 
+	openLink() {
+		window.open("https://github.com/lsweatman/CarcassonneScoreboard");
+	}
+
+	//TODO: Move this back to sheep.js
 	toggleSheep() {
 		var currentSheepState = this.state.sheepEnabled;
 		this.setState({
@@ -72,7 +77,7 @@ export default class IndexPage extends React.Component {
 			this.state.remainingSheep.push(index);
 		},this);
 	}
-	
+
 	handleSheepGenerate(i) {
 		if (this.state.remainingSheep.length == 0) {
 			window.alert("All sheep used. Gather only");
@@ -197,6 +202,11 @@ export default class IndexPage extends React.Component {
 						</Button>
 					</div>
 
+					<button className="footer-pin"
+							onClick={this.openLink.bind(this)}>
+						View on GitHub
+					</button>
+					
 				</div>
 			)
 		}
@@ -215,6 +225,11 @@ export default class IndexPage extends React.Component {
 								onClick={this.toggleSheep.bind(this)}>
 						</Button>
 					</div>
+
+					<button className="footer-pin"
+							onClick={this.openLink.bind(this)}>
+						View on GitHub
+					</button>
 
 				</div>
 			)
