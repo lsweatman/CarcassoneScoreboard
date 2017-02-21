@@ -13,6 +13,7 @@ export default class Sheep extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		//Rerendering on remaining sheep array prop change
 		if (nextProps.indivName !== this.state.indivName) {
 			this.setState({
 				indivName: nextProps.indivName
@@ -24,14 +25,10 @@ export default class Sheep extends React.Component {
 				remainingSheep: nexpProps.remainingSheep
 			});
 		}
-		
-        /*var totalSheep = nextProps.subSheepArray.reduce((a, b) => a + b, 0);
-		this.setState({
-			sheepScore: totalSheep
-		});*/
 	}
 	
 	handleNameChange(evt) {
+		//Updates name textbox and sends to parent
 		this.setState({
 			indivName: evt.target.value.substring(0,10)
 		}, () => {
@@ -40,6 +37,7 @@ export default class Sheep extends React.Component {
 	}
 
 	handleGather() {
+		//Sends changefactor of sheepScore to parent function
 		this.props.scoreChange(this.state.sheepScore, this.props.index);
 		
 		//Returns Sheep
@@ -49,7 +47,8 @@ export default class Sheep extends React.Component {
 		},this);
 				
 		this.props.updateRemaining(updateRemaining);
-				
+		
+		//Resets values
 		this.setState({
 			sheepScore: 0,
 			currentSheepArray: []
@@ -57,7 +56,6 @@ export default class Sheep extends React.Component {
 	}
 
 	handleGenerate() {
-		//this.props.handleGenerate(this.props.index);
 		
 		if (this.state.remainingSheep.length == 0) {
 			window.alert("All sheep used. Gather only");
@@ -66,22 +64,24 @@ export default class Sheep extends React.Component {
 			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
 			
 			if (this.state.remainingSheep[randomVal] !== 0) {
+				//Update state with generated sheep
 				var currentSheepUpdate = this.state.currentSheepArray;
-
 				currentSheepUpdate.push(this.state.remainingSheep[randomVal]);
-
 				
 				this.setState({
 					currentSheepArray: currentSheepUpdate,
 					sheepScore: this.state.sheepScore + this.state.remainingSheep[randomVal]
 				});
 				
+				//Report sheep taken to parent
 				var updateRemaining = this.state.remainingSheep;
 				updateRemaining.splice(randomVal, 1);
 				this.props.updateRemaining(updateRemaining);
 			}
 			else {
 				window.alert("A wolf has eaten your flock!");
+				
+				//Return sheep to parent
 				var updateRemaining = this.state.remainingSheep;
 				this.state.currentSheepArray.map((indexValue) => {
 					updateRemaining.push(indexValue);
@@ -89,6 +89,7 @@ export default class Sheep extends React.Component {
 				
 				this.props.updateRemaining(updateRemaining);
 				
+				//Reset component
 				this.setState({
 					sheepScore: 0,
 					currentSheepArray: []

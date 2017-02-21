@@ -8,9 +8,6 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 export default class ScoreButtons extends React.Component {
 	constructor(props) {
 		super(props);
-		/*var propName = this.props.indivName;
-		var propScore = this.props.indivScore;*/
-
 		this.state = {
 			name: this.props.indivName,
 			score: this.props.indivScore
@@ -18,6 +15,7 @@ export default class ScoreButtons extends React.Component {
 	}
 
 	handleScoreChange(changeFactor) {
+		//Update score in child and parent
 		this.setState({
 			score: this.state.score + changeFactor
 		}, () => {
@@ -26,6 +24,7 @@ export default class ScoreButtons extends React.Component {
 	}
 
 	handleTextBoxChange(evt) {
+		//Takes value of name textbox and sends it to parent
 		this.setState({
 			name: evt.target.value.substring(0,10)
 		}, () => {
@@ -38,6 +37,7 @@ export default class ScoreButtons extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		//For forced rerendering on props change
 		if (nextProps.indivName !== this.state.name) {
 			this.setState({
 				name: nextProps.indivName

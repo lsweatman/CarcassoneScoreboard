@@ -10,14 +10,12 @@ import Sheep from './Sheep';
 export default class IndexPage extends React.Component {
 	constructor(props) {
 		super();
-
 		this.state = {
 			scores: [0,0,0],
 			names: ["","",""],
 			sheepEnabled: false,
 			numOfPeople: 3,
-			remainingSheep: [0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4],
-			subSheepArray: [[],[],[]]
+			remainingSheep: [0,0,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4]
 		}
 	}
 
@@ -31,6 +29,7 @@ export default class IndexPage extends React.Component {
 	}
 
 	scoreUpdate(changeFactor, i) {
+		//Update the person's score based on a factor of change
 		var scoresArr = this.state.scores;
 		scoresArr[i] = scoresArr[i] + changeFactor;
 		this.setState({
@@ -39,23 +38,18 @@ export default class IndexPage extends React.Component {
 	}
 
 	addPerson() {
-		//TODO: Rename stuff
 		var namesArr = this.state.names;
 		namesArr.push("");
 
 		var scoresArr = this.state.scores;
 		scoresArr.push(0);
-
-		var subSheepArr = this.state.subSheepArray;
-		subSheepArr.push([]);
 		
 		var currentNum = this.state.numOfPeople;
 
 		this.setState({
 			numOfPeople: currentNum+1,
 			names: namesArr,
-			scores: scoresArr,
-			subSheepArray: subSheepArr
+			scores: scoresArr
 		});
 	}
 	
@@ -66,19 +60,16 @@ export default class IndexPage extends React.Component {
 		var scoresArr = this.state.scores;
 		scoresArr.splice(i, 1);
 
-		var subSheepArr = this.state.subSheepArray;
-		subSheepArr.splice(i, 1);
-
 		var currentNum = this.state.numOfPeople;
 		this.setState({
 			numOfPeople: currentNum-1,
 			names: namesArr,
-			scores: scoresArr,
-            subSheepArray: subSheepArr
+			scores: scoresArr
 		});
 	}
 	
 	openLink() {
+		//Opens when button is clicked
 		window.open("https://github.com/lsweatman/CarcassonneScoreboard");
 	}
 
@@ -90,6 +81,7 @@ export default class IndexPage extends React.Component {
 	}
 
 	handleUpdateRemaining(newArray) {
+		//Updates remain sheep from child component
 		this.setState({
 			remainingSheep: newArray
 		});
@@ -107,6 +99,7 @@ export default class IndexPage extends React.Component {
 		)
 	}
 
+	//Only used when sheepEnabled is true
 	eachSheepPerson(score, i) {
 		return (
 			<Sheep key={i}
