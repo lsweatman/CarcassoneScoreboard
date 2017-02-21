@@ -21,7 +21,7 @@ export default class ScoreButtons extends React.Component {
 		this.setState({
 			score: this.state.score + changeFactor
 		}, () => {
-			this.props.scoreChange(this.state.score, this.props.index);
+			this.props.scoreChange(changeFactor, this.props.index);
 		});
 	}
 

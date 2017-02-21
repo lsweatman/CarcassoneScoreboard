@@ -30,9 +30,9 @@ export default class IndexPage extends React.Component {
 		this.forceUpdate();
 	}
 
-	scoreUpdate(newScore, i) {
+	scoreUpdate(changeFactor, i) {
 		var scoresArr = this.state.scores;
-		scoresArr[i] = newScore;
+		scoresArr[i] = scoresArr[i] + changeFactor;
 		this.setState({
 			scores: scoresArr
 		})
@@ -58,75 +58,7 @@ export default class IndexPage extends React.Component {
 			subSheepArray: subSheepArr
 		});
 	}
-
-	openLink() {
-		window.open("https://github.com/lsweatman/CarcassonneScoreboard");
-	}
-
-	//TODO: Move this back to sheep.js
-	toggleSheep() {
-		var currentSheepState = this.state.sheepEnabled;
-		this.setState({
-			sheepEnabled: !currentSheepState
-		});
-	}
 	
-	returnSheep(array) {
-		var currentSheep = this.state.remainingSheep;
-		array.map((index) => {
-			this.state.remainingSheep.push(index);
-		},this);
-	}
-
-	handleSheepGenerate(i) {
-		if (this.state.remainingSheep.length == 0) {
-			window.alert("All sheep used. Gather only");
-		}
-		else {
-			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
-			
-			if (this.state.remainingSheep[randomVal] !== 0) {
-				var subSheepUpdater = this.state.subSheepArray;
-
-				subSheepUpdater[i].push(this.state.remainingSheep[randomVal]);
-
-				var updateRemaining = this.state.remainingSheep;
-				updateRemaining.splice(randomVal, 1);
-				
-				this.setState({
-					subSheepArray: subSheepUpdater,
-					remainingSheep: updateRemaining
-				});
-			}
-			else {
-				window.alert("A wolf has eaten your flock!");
-				this.returnSheep(this.state.subSheepArray[i]);
-
-                var subSheepWiper = this.state.subSheepArray;
-                subSheepWiper[i] = [];
-
-				this.setState({
-					subSheepArray: subSheepWiper
-				});
-			}
-		}
-	}
-
-	handleSheepGather(i) {
-		var totalSheep = this.state.subSheepArray[i].reduce((a, b) => a + b, 0);
-		var updateScoreArr = this.state.scores;
-		updateScoreArr[i] = totalSheep + updateScoreArr[i];
-		
-        this.returnSheep(this.state.subSheepArray[i]);
-        var subSheepWiper = this.state.subSheepArray;
-        subSheepWiper[i] = [];
-
-        this.setState({
-            subSheepArray: subSheepWiper,
-			scores: updateScoreArr
-        });
-	}
-
 	removePerson(i) {
 		var namesArr = this.state.names;
 		namesArr.splice(i, 1);
@@ -143,6 +75,23 @@ export default class IndexPage extends React.Component {
 			names: namesArr,
 			scores: scoresArr,
             subSheepArray: subSheepArr
+		});
+	}
+	
+	openLink() {
+		window.open("https://github.com/lsweatman/CarcassonneScoreboard");
+	}
+
+	toggleSheep() {
+		var currentSheepState = this.state.sheepEnabled;
+		this.setState({
+			sheepEnabled: !currentSheepState
+		});
+	}
+
+	handleUpdateRemaining(newArray) {
+		this.setState({
+			remainingSheep: newArray
 		});
 	}
 
@@ -166,10 +115,7 @@ export default class IndexPage extends React.Component {
 				   nameChange={this.nameUpdate.bind(this)}
 				   scoreChange={this.scoreUpdate.bind(this)} 
 				   remainingSheep={this.state.remainingSheep} 
-				   returnSheep={this.returnSheep.bind(this)}
-				   handleGenerate={this.handleSheepGenerate.bind(this)}
-				   handleGather={this.handleSheepGather.bind(this)}
-				   subSheepArray={this.state.subSheepArray[i]}/>
+				   updateRemaining={this.handleUpdateRemaining.bind(this)}/>
 		)
 	}
 	

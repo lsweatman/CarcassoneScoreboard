@@ -4,14 +4,33 @@ import Button from 'react-bootstrap/lib/Button';
 export default class Sheep extends React.Component {
 	constructor(props) {
 		super(props);
-		//var parentName = this.props.indivName;
-		this.captiveSheep = this.props.subSheepArray;
 		this.state = {
+			remainingSheep: this.props.remainingSheep,
 			indivName: this.props.indivName,
+			currentSheepArray: [],
 			sheepScore: 0
 		};
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.indivName !== this.state.indivName) {
+			this.setState({
+				indivName: nextProps.indivName
+			});
+		}
+
+		if (nextProps.remainingSheep !== this.state.remainingSheep) {
+			this.setState({
+				remainingSheep: nexpProps.remainingSheep
+			});
+		}
+		
+        /*var totalSheep = nextProps.subSheepArray.reduce((a, b) => a + b, 0);
+		this.setState({
+			sheepScore: totalSheep
+		});*/
+	}
+	
 	handleNameChange(evt) {
 		this.setState({
 			indivName: evt.target.value.substring(0,10)
@@ -20,31 +39,62 @@ export default class Sheep extends React.Component {
 		});
 	}
 
-	handleGatherClick() {
-		this.props.handleGather(this.props.index);
-	}
-	
-	handleScoreChange(changeFactor) {
+	handleGather() {
+		this.props.scoreChange(this.state.sheepScore, this.props.index);
+		
+		//Returns Sheep
+        var updateRemaining = this.state.remainingSheep;
+		this.state.currentSheepArray.map((indexValue) => {
+			updateRemaining.push(indexValue);
+		},this);
+				
+		this.props.updateRemaining(updateRemaining);
+				
 		this.setState({
-			sheepScore: this.state.sheepScore + changeFactor
-		});
-	}
-	
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.indivName !== this.state.indivName) {
-			this.setState({
-				indivName: nextProps.indivName
-			});
-		}
-
-        var totalSheep = nextProps.subSheepArray.reduce((a, b) => a + b, 0);
-		this.setState({
-			sheepScore: totalSheep
+			sheepScore: 0,
+			currentSheepArray: []
 		});
 	}
 
 	handleGenerate() {
-		this.props.handleGenerate(this.props.index);
+		//this.props.handleGenerate(this.props.index);
+		
+		if (this.state.remainingSheep.length == 0) {
+			window.alert("All sheep used. Gather only");
+		}
+		else {
+			var randomVal = Math.floor(Math.random() * this.state.remainingSheep.length);
+			
+			if (this.state.remainingSheep[randomVal] !== 0) {
+				var currentSheepUpdate = this.state.currentSheepArray;
+
+				currentSheepUpdate.push(this.state.remainingSheep[randomVal]);
+
+				
+				this.setState({
+					currentSheepArray: currentSheepUpdate,
+					sheepScore: this.state.sheepScore + this.state.remainingSheep[randomVal]
+				});
+				
+				var updateRemaining = this.state.remainingSheep;
+				updateRemaining.splice(randomVal, 1);
+				this.props.updateRemaining(updateRemaining);
+			}
+			else {
+				window.alert("A wolf has eaten your flock!");
+				var updateRemaining = this.state.remainingSheep;
+				this.state.currentSheepArray.map((indexValue) => {
+					updateRemaining.push(indexValue);
+				},this);
+				
+				this.props.updateRemaining(updateRemaining);
+				
+				this.setState({
+					sheepScore: 0,
+					currentSheepArray: []
+				});
+			}
+		}
 	}
 	
 	render() {
@@ -65,7 +115,7 @@ export default class Sheep extends React.Component {
 				</Button>
 
 				<Button className="btn btn-primary sheep-element"
-								onClick={this.handleGatherClick.bind(this)}>
+								onClick={this.handleGather.bind(this)}>
 							Gather
 				</Button>
 			</div>
