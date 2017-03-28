@@ -172,7 +172,25 @@ export default class IndexPage extends React.Component {
 				   subSheepArray={this.state.subSheepArray[i]}/>
 		)
 	}
-	
+
+	wipeScores() {
+		var userChoice = confirm("Are you sure you want to wipe all scores?");
+		if (userChoice == true) {
+			var i;
+			for (i = 0; i < this.state.subSheepArray.length; i++){
+				this.returnSheep(this.state.subSheepArray[i]);
+			}
+			var subSheepWiper = Array(this.state.scores.length).fill().map(()=> []);
+
+			var test = Array.apply(null, Array(this.state.scores.length)).map(Number.prototype.valueOf,0);
+			console.log(test);
+			this.setState({
+				scores: test,
+				subSheepArray: subSheepWiper
+			});
+		}
+	}
+
 	renderWithSheep() {
 		return (
 			<div className="subboard">
@@ -200,13 +218,18 @@ export default class IndexPage extends React.Component {
 						<Button className="btn btn-sm btn-info misc-buttons sheep-icon"
 								onClick={this.toggleSheep.bind(this)}>
 						</Button>
+
+						<Button className="btn btn-sm btn-danger misc-buttons"
+								onClick={this.wipeScores.bind(this)}>
+							<Glyphicon glyph="glyphicon glyphicon-repeat"/>
+						</Button>
 					</div>
 
 					<button className="footer-pin"
 							onClick={this.openLink.bind(this)}>
 						View on GitHub
 					</button>
-					
+
 				</div>
 			)
 		}
@@ -223,6 +246,11 @@ export default class IndexPage extends React.Component {
 
 						<Button className="btn btn-sm btn-info misc-buttons sheep-icon"
 								onClick={this.toggleSheep.bind(this)}>
+						</Button>
+
+						<Button className="btn btn-sm btn-danger misc-buttons"
+								onClick={this.wipeScores.bind(this)}>
+							<Glyphicon glyph="glyphicon glyphicon-repeat"/>
 						</Button>
 					</div>
 
